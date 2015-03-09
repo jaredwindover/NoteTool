@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 
 var StaticServe = require('./routes/StaticServe');
 var Index = require('./routes/Index');
-var Template = require('./routes/Template');
 var AddressTemplate = require('./routes/AddressTemplate');
 var UpdateNote = require('./routes/UpdateNote');
 var DeleteNote = require('./routes/DeleteNote');
