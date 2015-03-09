@@ -14,14 +14,27 @@ $(document).ready(function() {
 	   });
     return false;
   });
+  
   //On content change, update mathjax
   $("#content")
       .bind('input propertychange',function(){
-	$("#Preview").html($(this).val());
+	$("#Preview").html('<h1>'+$("#title").val()+'</h1>'+$(this).val());
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"Preview"]);
       });
 
+  //On title change, update mathjax
+  $("#title")
+      .bind('input propertychange',function(){
+	$("#Preview").html(
+	  '<h1>'+$(this).val()+'</h1>'
+	  +$("#content").val()
+	);
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"Preview"]);
+      });
+  
   //Set up preview on load
-  $("#Preview").html($("#content").val());
+  $("#Preview").html(
+	  '<h1>'+$("#title").val()+'</h1>'
+	  +$("#content").val());
   MathJax.Hub.Queue(["Typeset",MathJax.Hub,"Preview"]);
 });
