@@ -1,19 +1,40 @@
 doctype html
+//- For editing or creating notes
 html(lang="en")
   head
-    - var title = 'NoteTool -- '+ (typeof(Note) === 'undefined' ? 'New Note': 'Edit Note')
+    //- Construct variables
+    - if (typeof(Note) === 'undefined') {
+    -   var title = 'NoteTool -- New Note';
+    -   var action = '/MakeNote';
+    -   var value = '';
+    -   var content = ''; 
+    - } else {
+    -   var title = 'NoteTool -- Edit Note';
+    -   var action = '/UpdateNote/'+Note.address;
+    -   var value = Note.Name;
+    -   var content = Note.Content; 
+    - }
+    
     title #{title}
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
-    script(src='/js/Edit.js')
-    script(src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full')
+    //- JQuery cdn
+    script(
+      type='text/javascript',
+      src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    //- MathJax cdn
+    script(
+      type='text/javascript',
+      src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full')
+    //- Page Javascript
+    script(
+      type='text/javascript',
+      src='/js/Edit.js')
   body
-    a(href='/') Home
-    - var action = (typeof(Note) === 'undefined' ? '/MakeNote' : '/UpdateNote/'+Note.address)
+    //- Link to return to list of notes and abandon current note
+    a#home(href='/') Home
     form#form1(
       action='#{action}',
       method='post'
     )
-      - var value = (typeof(Note) === 'undefined' ? '': Note.Name);
       input#title(
         type='text',
         name='title',
@@ -21,7 +42,6 @@ html(lang="en")
         placeholder='Title'
       )
       br
-      - var content = (typeof(Note) === 'undefined' ? '': Note.Content);
       textarea#content(
         name='content',
         placeholder='Content',

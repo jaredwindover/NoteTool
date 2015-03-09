@@ -1,11 +1,15 @@
 doctype html
+//- For showing list of notes
 html
   head
   body
     h4
+      //- Link to add note
       a(href="Edit/") Add Note
     h1 Notes:
     ol
-      each note in notes
+      // -Must be passed variable notes
+      each note in notes 
         li
+          // -Link for each note
           a(href="Notes/#{note.address}") #{note.name}

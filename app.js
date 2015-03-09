@@ -1,29 +1,50 @@
-var express = require('express');
-var jade = require('jade');
-var fs = require('fs');
-var bodyParser = require('body-parser');
+var express    = require('express');     // For routing
+var jade       = require('jade');	 // For templates
+var bodyParser = require('body-parser'); // For getting post params
 
-var StaticServe = require('./routes/StaticServe');
-var Index = require('./routes/Index');
+
+// Routes 
+var StaticServe     = require('./routes/StaticServe');
+var Index           = require('./routes/Index');
 var AddressTemplate = require('./routes/AddressTemplate');
-var UpdateNote = require('./routes/UpdateNote');
-var DeleteNote = require('./routes/DeleteNote');
-var MakeNote = require('./routes/MakeNote');
+var UpdateNote      = require('./routes/UpdateNote');
+var DeleteNote      = require('./routes/DeleteNote');
+var MakeNote        = require('./routes/MakeNote');
 
-var DbURI = "mongodb://localhost:27017/NoteTool"
+// Address of database
+var dbURI = "mongodb://localhost:27017/NoteTool"
+// Folder where public files are
+var publicDir = __dirname + '/public/';
 
-var app = express()
-.set('views', __dirname + '/public/')
-.set('view engine', 'jade')
-.use(bodyParser.json())
-.use(bodyParser.urlencoded({extended:true}))
-.get('/:type(css|js)/:name', StaticServe(__dirname + '/public/'))
-.get('/',Index(DbURI))
-.get('/:template(Notes|NewNote|Edit)/:address?', AddressTemplate(DbURI))
-.post('/MakeNote', MakeNote(DbURI))
-.post('/UpdateNote/:address', UpdateNote(DbURI))
-.delete('/Delete/:address',DeleteNote(DbURI))
+var app = express();
 
+// Set up template engine
+app.set('views', publicDir)
+   .set('view engine', 'jade');
+
+// Set up post parameters
+app.use(bodyParser.json())
+   .use(bodyParser.urlencoded({extended:true}));
+
+// Routes for GET requests
+app.get('/:type(css|js)/:name',
+	StaticServe(publicDir))
+   .get('/',
+	Index(dbURI))
+   .get('/:template(Notes|NewNote|Edit)/:address?',
+	AddressTemplate(dbURI));
+
+// Routes for POST requests
+app.post('/MakeNote',
+	 MakeNote(dbURI))
+   .post('/UpdateNote/:address',
+	 UpdateNote(dbURI));
+
+// Routes for DELETE requests
+app.delete('/Delete/:address',
+	   DeleteNote(dbURI));
+
+// Start server
 var server = app.listen(8080, function() {
   var host = server.address().address;
   var port = server.address().port  
