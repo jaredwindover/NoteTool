@@ -1,20 +1,30 @@
 doctype html
+//- For showing single note
 html(lang="en")
   head
     title NoteTool -- !{Note.Name}
-    // Copyright (c) 2010-2015 The MathJax Consortium 
     meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    //- MathJax cdn
     script(
       type="text/javascript",
       src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full")
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
-    script(src='../js/Delete.js')
+    //- JQuery cdn
+    script(
+      type="text/javascript",
+      src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    //- Page javascript
+    script( 
+      type="text/javascript",
+      src='../js/Delete.js')
   body
-    a(href="../") Home
+    //- Link to return to list of notes
+    a#home(href="../") Home
     br
-    a(href="../Edit/#{Note.address}") Edit
+    //- Link to edit current note
+    a#edit(href="../Edit/#{Note.address}") Edit
     br
+    //- Link to delete current note
     a#delete(href="../Delete/#{Note.address}") Delete
     h1 !{Note.Name}
     div#main !{Note.Content}
