@@ -1,7 +1,6 @@
 var express = require('express');
 var jade = require('jade');
 var fs = require('fs');
-var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 
 var StaticServe = require('./routes/StaticServe');
@@ -21,8 +20,7 @@ var app = express()
 .use(bodyParser.urlencoded({extended:true}))
 .get('/:type(css|js)/:name', StaticServe(__dirname + '/public/'))
 .get('/',Index(DbURI))
-.get('/:template(NewNote)', Template())
-.get('/:template(Notes|Edit)/:address', AddressTemplate(DbURI))
+.get('/:template(Notes|NewNote|Edit)/:address?', AddressTemplate(DbURI))
 .post('/MakeNote', MakeNote(DbURI))
 .post('/UpdateNote/:address', UpdateNote(DbURI))
 .delete('/Delete/:address',DeleteNote(DbURI))

@@ -1,37 +1,44 @@
 var MongoClient = require('mongodb').MongoClient;
+var getNote = require('../dbInterface').getNote;
 
 function route(DbURI) {
   var fret = function(req,res,next) {
     var template = req.params.template;
     var address = req.params.address;
-    console.log("Attempting to serve %s with %s template",
-		address,template);
-    console.log("Connecting to db...")
-    MongoClient.connect(DbURI, function(err,db){
-      if (err) {
-	console.log("Could not connect to db...");
-	res.status(404).send("Db error");
+    if (typeof(address) == 'undefined') {
+      console.log("Attempting to serve %s template",
+		  template);
+      try{
+	res.render(template,{});
       }
-      else {
-	db.collection("Notes").findOne(
-	  {address:address},
-	  function(err,item){
-	    if (err){
-	      console.log("Could not find entry: %s",address);
-	      res.status(404).send("Lookup error");
-	    }
-	    else if (!item){
-	      console.log("No matching item for %s", address);
-	      res.status(404).send("No item found");
-	    }
-	    else{
-	      console.log("Returned note: %s in template: %s",
-			  address,template)
-	      res.render(template,{Note:item})
-	    }	  
-	  })
+      catch (err) {
+	res.status(404).send("Could not send template");
+	console.log("Error serving template %s",
+		    template);
       }
-    })
+    }
+    else {
+      console.log("Attempting to serve %s with %s template",
+		  address,template);
+      getNote(DbURI,{address:address},function(err,note){
+	if (err) {
+	  res.status(404).send(err);
+	}
+	else {
+	  console.log("Rendering note: %s with template: %s",
+		      address,template);
+	  note.type = 0;
+	  try{
+	    res.render(template,note);
+	  }
+	  catch (err) {
+	    res.status(404).send("Could not send template");
+	    console.log("Error serving template %s",
+			template);
+	  }
+	}
+      });
+    }
   };
   return fret;
 };
