@@ -4,6 +4,7 @@ html(lang="en")
     title NoteTool -- Edit Note
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script(src='/js/Edit.js')
+    script(src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full')
   body
     a(href='/') Home
     form#form1(
@@ -24,3 +25,5 @@ html(lang="en")
       ) #{Note.Content}
       br
       input#submit(type='submit')
+    #Preview
+      
