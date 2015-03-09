@@ -12,5 +12,12 @@ $(document).ready(function() {
 	     window.location.href='/Notes/'+title.replace(/ /g,'');
 	   });
     return false;
-  }) 
+  })
+  $("#content")
+      .bind('input propertychange',function(){
+	$("#Preview").html($(this).val());
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"Preview"]);
+      });
+  $("#Preview").html($("#content").val());
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub,"Preview"]);
 })
