@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var getNote = require('../dbInterface').getNote;
+var getNote = require('../lib/dbInterface').getNote;
 
 function route(DbURI) {
   var fret = function(req,res,next) {
