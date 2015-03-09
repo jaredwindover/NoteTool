@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+  body
+    h4
+      a(href="NewNote") Add Note
+    h1 Notes:
+    ol
+      each note in notes
+        li
+          a(href="Notes/#{note.address}") #{note.name}

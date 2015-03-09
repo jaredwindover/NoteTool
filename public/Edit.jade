@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+  head
+    title NoteTool -- Edit Note
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    script(src='/js/Edit.js')
+  body
+    a(href='/') Home
+    form#form1(
+      action='/UpdateNote/#{Note.address}'
+    )
+      input#title(
+        type='text',
+        name='title',
+        value='#{Note.Name}',
+        placeholder='Title'
+      )
+      br
+      textarea#content(
+        name='content',
+        placeholder='Content',
+        rows=10,
+        cols=40
+      ) #{Note.Content}
+      br
+      input#submit(type='submit')
