@@ -1,28 +1,33 @@
 doctype html
 html(lang="en")
   head
-    title NoteTool -- Edit Note
+    - var title = 'NoteTool -- '+ (typeof(Note) === 'undefined' ? 'New Note': 'Edit Note')
+    title #{title}
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script(src='/js/Edit.js')
     script(src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full')
   body
     a(href='/') Home
+    - var action = (typeof(Note) === 'undefined' ? '/MakeNote' : '/UpdateNote/'+Note.address)
     form#form1(
-      action='/UpdateNote/#{Note.address}'
+      action='#{action}',
+      method='post'
     )
+      - var value = (typeof(Note) === 'undefined' ? '': Note.Name);
       input#title(
         type='text',
         name='title',
-        value='#{Note.Name}',
+        value=value,
         placeholder='Title'
       )
       br
+      - var content = (typeof(Note) === 'undefined' ? '': Note.Content);
       textarea#content(
         name='content',
         placeholder='Content',
         rows=10,
         cols=40
-      ) #{Note.Content}
+      ) #{content}
       br
       input#submit(type='submit')
     #Preview
