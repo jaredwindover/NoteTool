@@ -37,6 +37,7 @@ var Preview = {
     this.buffer = buffer; this.preview = preview;
     buffer.style.visibility = "hidden";
     buffer.style.position = "absolute";
+    buffer.style.top = preview.style.top;
     preview.style.visibility = "";
     preview.style.position = "";
     //var tmpStyle = this.buffer.style;

@@ -5,6 +5,11 @@ html(lang="en")
     title NoteTool -- !{Note.Name}
     meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    //- Page CSS
+    link(
+      rel='stylesheet',
+      href='/css/Notes.css'
+    )
     //- MathJax cdn
     script(
       type="text/javascript",
@@ -13,6 +18,11 @@ html(lang="en")
     script(
       type="text/javascript",
       src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    //- Page Javascript
+    script(
+      type="text/javascript",
+      src="/js/Notes.js"
+    )
     //- Page javascript
     script( 
       type="text/javascript",
@@ -26,5 +36,7 @@ html(lang="en")
     br
     //- Link to delete current note
     a#delete(href="../Delete/#{Note.address}") Delete
-    h1 !{Note.Name}
-    div#main !{Note.Content}
+    #placeholder Loading Note
+    #container.hold
+      h1 !{Note.Name}
+      #main !{Note.Content}

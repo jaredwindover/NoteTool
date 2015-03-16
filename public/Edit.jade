@@ -7,12 +7,14 @@ html(lang="en")
     -   var title = 'NoteTool -- New Note';
     -   var action = '/MakeNote';
     -   var value = '';
-    -   var content = ''; 
+    -   var content = '';
+    -   var preview = '';
     - } else {
     -   var title = 'NoteTool -- Edit Note';
     -   var action = '/UpdateNote/'+Note.address;
     -   var value = Note.Name;
-    -   var content = Note.Content; 
+    -   var content = Note.Content;
+    -   var preview = "Loading note..."
     - }
     
     title #{title}
@@ -58,6 +60,8 @@ html(lang="en")
             ) #{content}
             br
             input#submit(type='submit')
-        #Preview.show
-        #Buffer.show
+        #Preview.show #{preview}
+        #Buffer.show(
+          style="position:absolute;visibility:hidden;"
+        )
       

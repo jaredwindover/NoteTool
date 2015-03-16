@@ -1,7 +1,7 @@
 html, body{
     height:100%;
     margin:0;
-    padding:0;
+    padding:0 2px 5px 0;
     overflow:hidden;
 }
 
@@ -13,6 +13,8 @@ html, body{
     padding: 5px;
     height:100%;
     border:1px solid;
+    top: 0px;
+    left: 0px;
 }
 
 input,textarea{
@@ -33,10 +35,14 @@ textarea{
 
 #container{
     height:100%;
+    box-sizing: border-box;
+    padding-top: 10px;
+    padding-bottom: 5px;
 }
 
 #row-content{
     height:90%;
+    position:relative;
 }
 
 #edit{
