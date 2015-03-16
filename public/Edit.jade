@@ -16,6 +16,11 @@ html(lang="en")
     - }
     
     title #{title}
+    //- Page CSS
+    link(
+      rel='stylesheet',
+      href='/css/Edit.css'
+    )
     //- JQuery cdn
     script(
       type='text/javascript',
@@ -30,25 +35,29 @@ html(lang="en")
       src='/js/Edit.js')
   body
     //- Link to return to list of notes and abandon current note
-    a#home(href='/') Home
-    form#form1(
-      action='#{action}',
-      method='post'
-    )
-      input#title(
-        type='text',
-        name='title',
-        value=value,
-        placeholder='Title'
-      )
-      br
-      textarea#content(
-        name='content',
-        placeholder='Content',
-        rows=10,
-        cols=40
-      ) #{content}
-      br
-      input#submit(type='submit')
-    #Preview
+    #container
+      #header
+        a#home(href='/') Home
+      #row-content
+        #edit    
+          form#form1(
+            action='#{action}',
+            method='post'
+          )
+            input#title(
+              type='text',
+              name='title',
+              value=value,
+              placeholder='Title'
+            )
+            br
+            textarea#content(
+              name='content',
+              placeholder='Content',
+              rows=10
+            ) #{content}
+            br
+            input#submit(type='submit')
+        #Preview.show
+        #Buffer.show
       
