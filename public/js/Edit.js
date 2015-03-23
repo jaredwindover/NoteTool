@@ -2,8 +2,10 @@
 //Scroll div to bottom on update
 function ScrollDown(){
   console.log("Attempting to scroll")
-  var mydiv = $('#Preview');
-  mydiv.scrollTop(mydiv.prop('scrollHeight'));
+  var mydiva = $('#Preview');
+  mydiva.scrollTop(mydiva.prop('scrollHeight'));
+  var mydivb = $('#Buffer');
+  mydivb.scrollTop(mydivb.prop('scrollHeight'));
 };
 
 var Preview = {
@@ -15,6 +17,7 @@ var Preview = {
   timeout: null,     // store setTimout id
   mjRunning: false,  // true when MathJax is processing
   oldText: null,     // used to check if an update is needed
+  recheck: false,    // flag that text has changed while typesetting
 
   //
   //  Get the preview and buffer DIV's
@@ -69,14 +72,19 @@ var Preview = {
   CreatePreview: function () {
     console.log("Creating Preview");
     Preview.timeout = null;
-    if (this.mjRunning) return;
+    if (this.mjRunning) {
+      this.recheck = true;
+      return;
+    }
     var text = '<h1>'+$("#title").val()+'</h1>'
 	  +$("#content").val();
     if (text === this.oldtext) return;
     this.buffer.innerHTML = this.oldtext = text;
     this.mjRunning = true;
+    this.recheck = false;
     MathJax.Hub.Queue(
       ["Typeset",MathJax.Hub,this.buffer],
+      ["ReCheck",this],
       ["PreviewDone",this]
     );
   },
@@ -89,6 +97,19 @@ var Preview = {
     console.log("PreviewDone");
     this.mjRunning = false;
     this.SwapBuffers();
+    ScrollDown();
+  },
+
+  //
+  //  Re-CreatePreview if Necessary
+  //
+  ReCheck: function () {
+    console.log("Rechecking");
+    if (this.recheck) {
+      MathJax.Hub.Queue(
+	["CreatePreview",this]
+      );
+    }
   }
 
 };
