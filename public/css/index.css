@@ -1,0 +1,14 @@
+#tags{
+    overflow:auto;
+}
+
+.tag{
+    border: 1px solid;
+    margin: 2px;
+    padding: 2px;
+    float:left;
+}
+
+.tag:hover{
+    color: red;
+}

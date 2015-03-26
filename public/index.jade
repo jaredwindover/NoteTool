@@ -2,10 +2,28 @@ doctype html
 //- For showing list of notes
 html
   head
+    //- Page CSS
+    link(
+      rel='stylesheet',
+      href='/css/index.css'
+    )
+    //- JQuery cdn
+    script(
+      type="text/javascript",
+      src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+    //- Page Javascript
+    script(
+      type="text/javascript",
+      src="/js/index.js"
+    )
   body
     h4
       //- Link to add note
       a(href="Edit/") Add Note
+    h2 Tags:
+    #tags
+      a#t1.tag Topology
+      a#t2.tag Abstract Algebra
     h1 Notes:
     ol
       // -Must be passed variable notes
