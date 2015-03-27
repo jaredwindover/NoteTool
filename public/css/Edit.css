@@ -51,3 +51,33 @@ textarea{
     padding:20px;
     box-sizing:border-box;
 }
+
+.tag{
+    float:left;
+    font-size:small;
+    background-color:lightgrey;
+    border-radius: 10px;
+    margin: 3px;
+    padding: 5px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.deleteTag{
+    text-align:center;
+    float: right;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    background-color:grey;
+    margin-left: 2px;
+    cursor:pointer;
+}
+
+.deleteTag:hover{
+    background-color:red;
+}
+
+#newTag{
+    margin:0;
+}

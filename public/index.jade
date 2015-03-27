@@ -22,12 +22,16 @@ html
       a(href="Edit/") Add Note
     h2 Tags:
     #tags
-      a#t1.tag Topology
-      a#t2.tag Abstract Algebra
+      each tag in tags
+        a.tag.clickable #{tag}
     h1 Notes:
-    ol
+    ul
       // -Must be passed variable notes
       each note in notes 
         li
           // -Link for each note
-          a(href="Notes/#{note.address}") #{note.name}
+          a.note(href="Notes/#{note.address}" data-tags="#{note.tags.join(',')}") #{note.name}
+          br
+          #tags
+            each tag in note.tags
+              span.tag.small #{tag}

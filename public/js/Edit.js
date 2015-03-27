@@ -120,16 +120,31 @@ var Preview = {
 Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
 Preview.callback.autoReset = true;  // make sure it can run more than once
 
+function addTag(text){
+  var tagHtml = '<a class="tag">'+text+'<span class="deleteTag">x</span></a>'
+  var newTag = $('#newTag');
+  $(tagHtml).insertBefore(newTag.parent())
+	.children('.deleteTag').click(
+	  function(){
+	    $(this).parent().remove();
+	  });
+}
+
 $(document).ready(function() {
   //Override submit action to redirect after
   $("#form1").submit(function() {
     var title = $("#title").val();
     var content = $("#content").val();
+    var tags = $.map($(".tag"),function(val,i){
+      console.log(val.text);
+      return val.text.slice(0,-1);
+    }).slice(0,-1);
     // Use form's action as url
     $.post($(this).attr("action"),
 	   {
 	     title:title,
-	     content:content
+	     content:content,
+	     tags:tags
 	   },
 	   function(){
 	     window.location.href='/Notes/'+title.replace(/ /g,'');
@@ -148,5 +163,24 @@ $(document).ready(function() {
   //Set up Preview
   Preview.Init();
   Preview.Update();
+
+  $("#newTag").bind('keypress keydown', function(ev){
+    if (ev.which === 13) {
+      ev.preventDefault();
+    }
+  });
+  
+  $("#newTag").bind('keyup', function(ev){
+    if (ev.which === 13) {
+      ev.preventDefault();
+      addTag($(this).val());
+      $(this).val('');
+    }
+  });
+
+  $(".deleteTag").click(function(){
+    $(this).parent().remove();
+  });
+
   
 });

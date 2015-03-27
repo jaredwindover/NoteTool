@@ -9,12 +9,14 @@ html(lang="en")
     -   var value = '';
     -   var content = '';
     -   var preview = '';
+    -   var tags = [];
     - } else {
     -   var title = 'NoteTool -- Edit Note';
     -   var action = '/UpdateNote/'+Note.address;
     -   var value = Note.Name;
     -   var content = Note.Content;
     -   var preview = "Loading note..."
+    -   var tags = Note.tags;
     - }
     
     title #{title}
@@ -59,6 +61,16 @@ html(lang="en")
               rows=10
             ) #{content}
             br
+            #tags
+              each tag in tags
+                a.tag #{tag}
+                  span.deleteTag x
+              a.tag
+                input#newTag(
+                  type='text',
+                  name='newTag',
+                  placeholder='AddTag'
+              )
             input#submit(type='submit')
         #Preview.show #{preview}
         #Buffer.show(

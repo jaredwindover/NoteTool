@@ -9,6 +9,13 @@
     float:left;
 }
 
-.tag:hover{
+.clickable{
+    cursor:pointer;    
+}
+
+.clickable:hover{
     color: red;
+}
+.small{
+    font-size:x-small;
 }

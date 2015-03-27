@@ -8,6 +8,8 @@ function route(DbURI) {
     var address = req.params.address;
     var title = req.body.title;
     var content = req.body.content;
+    var tags = req.body.tags;
+    if (!tags) {tags = []}
     console.log("Connecting to db...");
     MongoClient.connect(DbURI, function(err,db){
       if (err) {
@@ -24,7 +26,8 @@ function route(DbURI) {
 	  { // Note to replace it with
 	    Name:title,
 	    Content:content,
-	    address:title.replace(/ /g,'')
+	    address:title.replace(/ /g,''),
+	    tags:tags
 	  },
 	  function(err,result) {
 	    if (err) {

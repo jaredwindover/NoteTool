@@ -13,20 +13,43 @@ function route(dbURI) {
 	  [
 	    {$group:{_id:{},
 		     notes:{$addToSet:{name:"$Name",
-				       address:"$address"}}}},
+				       address:"$address",
+				       tags:"$tags"}}}},
 	    {$project:{_id:0,notes:1}}
 	  ],
-	  function(err,result){
+	  function(err,notes){
 	    if (err) {
 	      console.log("Could not get notes")
 	    }
 	    else {
 	      // If nothing returned
-	      if (!result[0]) {
+	      if (!notes[0]) {
 		// Construct empty result
-		result = [{notes:[]}];
+		notes = {notes:[],tags:[]};
+		res.render('index',notes)
 	      }
-	      res.render('index',result[0]);
+	      else {
+		//Otherwise try to get list of tags
+		notes=notes[0];
+		db.collection('Notes').aggregate(
+		  [
+		    {$unwind:"$tags"},
+		    {$group:{_id:{},
+			     tags:{$addToSet:"$tags"}
+		    }},
+		    {$project:{_id:0,tags:1}}
+		  ],
+		  function(err,tags){
+		    if (err)
+		      console.log("Could not get tags");
+		    else{
+		      notes.tags=tags[0].tags;
+		      console.log(tags);
+		      res.render('index',notes);
+		    }
+		  }
+		);
+	      }
 	    }
 	  }
 	);
