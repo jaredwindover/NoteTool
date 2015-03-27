@@ -43,7 +43,7 @@ function route(dbURI) {
 		    if (err)
 		      console.log("Could not get tags");
 		    else{
-		      notes.tags=tags[0].tags;
+		      notes.tags=tags[0].tags.sort();
 		      console.log(tags);
 		      res.render('index',notes);
 		    }

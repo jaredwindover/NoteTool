@@ -130,6 +130,20 @@ function addTag(text){
 	  });
 }
 
+function useTemplate(template, tag){
+  content = $('#content');
+  var prev = content.val();
+  if (prev !== '') {
+    content.val(prev + '\n' + template);
+  }
+  else {
+    content.val(template);
+  }
+  content.focus();
+  Preview.Update();
+  addTag(tag);
+}
+
 $(document).ready(function() {
   //Override submit action to redirect after
   $("#form1").submit(function() {
@@ -182,5 +196,24 @@ $(document).ready(function() {
     $(this).parent().remove();
   });
 
+  $('#theoremButton').click(function(){
+    var template = ['<h2>Theorem:</h2>',
+		    '<p></p>',
+		    '<h3>Proof:</h3>',
+		    '<p></p>',
+		    '<p align="right">\\(\\square\\)</p>'].join('\n');
+    useTemplate(template,'Theorem')
+  });
+
+  $('#definitionButton').click(function(){
+    var template = ['<h2>Definition:</h2>',
+		    '<p></p>'].join('\n');
+    useTemplate(template,'Definition')
+  });
   
+  $('#remarkButton').click(function(){
+    var template = ['<h3>Remark:</h3>',
+		'<p></p>'].join('\n');
+    useTemplate(template,'Remark')
+  });
 });

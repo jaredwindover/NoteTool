@@ -6,6 +6,8 @@ function route(dbURI) {
   return function(req,res,next) {
     var title = req.body.title;
     var content = req.body.content;
+    var tags = req.body.tags;
+    if (!tags) {tags = []}
     console.log(
       "Connecting to Db...");
     MongoClient.connect(dbURI, function(err,db){
@@ -20,7 +22,8 @@ function route(dbURI) {
 	  {
 	    Name:title,
 	    Content:content,
-	    address:title.replace(/ /g,'')
+	    address:title.replace(/ /g,''),
+	    tags:tags
 	  },
 	  function(err, result){
 	    if (err) {
